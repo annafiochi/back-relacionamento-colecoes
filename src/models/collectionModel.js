@@ -7,9 +7,12 @@ class CollectionModel {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        cards: true,
+      },
     });
 
-    console.log(colecoes);
+    // console.log(colecoes);
 
     return colecoes;
   }
@@ -21,24 +24,15 @@ class CollectionModel {
         id: Number(id),
       },
       include: {
-
         cards: true,
-    
       },
-      
-    },
-  );
+    });
 
     return colecao;
   }
 
-  // Criar um novo personagem
-  async create(
-    name,
-    description,
-    releaseYear,
-    
-  ) {
+  // Criar uma nova coleção
+  async create(name, description, releaseYear) {
     const novaColecao = await prisma.collection.create({
       data: {
         name,
@@ -50,21 +44,15 @@ class CollectionModel {
     return novaColecao;
   }
 
-  // Atualizar um personagem
-  async update(
-    id,
-    name,
-    description,
-    releaseYear,
-  ) {
+  // Atualizar uma coleção
+  async update(id, name, description, releaseYear) {
     const colecao = await this.findById(id);
 
     if (!colecao) {
       return null;
     }
 
-    // Atualize o personagem existente com os novos dados
- 
+    // Atualize a coleção existente com os novos dados
     if (name !== undefined) {
       name = name;
     }
@@ -74,7 +62,7 @@ class CollectionModel {
     if (releaseYear !== undefined) {
       releaseYear = releaseYear;
     }
-   
+
     const colecaoAtualizada = await prisma.collection.update({
       where: {
         id: Number(id),

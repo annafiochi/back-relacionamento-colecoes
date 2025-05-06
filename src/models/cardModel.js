@@ -1,38 +1,43 @@
 import prisma from "../../prisma/prisma.js";
 
 class CardModel {
-  // Obter todas as coleções
+  // Obter todas as cartas
   async findAll() {
     const cartas = await prisma.card.findMany({
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        collection: {
+          select: {
+            name: true,
+            description: true,
+            releaseYear: true,
+          },
+        },
+      },
     });
 
-    console.log(cartas);
+    // console.log(cartas);
 
     return cartas;
   }
 
-  // Obter uma coleção pelo ID
+  // Obter uma carta pelo ID
   async findById(id) {
     const carta = await prisma.card.findUnique({
       where: {
         id: Number(id),
       },
       include: {
-
-      collection: true,
-    
+        collection: true,
       },
-      
-    },
-  );
+    });
 
     return carta;
   }
 
-  // Criar uma carta
+  // Criar uma nova carta
   async create(
     name,
     rarity,
@@ -40,8 +45,6 @@ class CardModel {
     defensePoints,
     imageUrl,
     collectionId
-
-    
   ) {
     const novaCarta = await prisma.card.create({
       data: {
@@ -50,8 +53,7 @@ class CardModel {
         attackPoints,
         defensePoints,
         imageUrl,
-        collectionId,
-
+        collectionId: Number(collectionId),
       },
     });
 
@@ -75,7 +77,6 @@ class CardModel {
     }
 
     // Atualize a carta existente com os novos dados
-   
     const cartaAtualizada = await prisma.card.update({
       where: {
         id: Number(id),
@@ -86,14 +87,14 @@ class CardModel {
         attackPoints,
         defensePoints,
         imageUrl,
-        collectionId,
+        collectionId: Number(collectionId),
       },
     });
 
     return cartaAtualizada;
   }
 
-  // Remover uma coleção
+  // Remover uma carta
   async delete(id) {
     const carta = await this.findById(id);
 

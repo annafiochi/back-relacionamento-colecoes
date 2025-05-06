@@ -12,46 +12,38 @@ class CollectionController {
     }
   }
 
-  // GET /api/colecoes/:id
-  async getCollectionsById(req, res) {
+  // GET /colecoes/:id
+  async getCollectionById(req, res) {
     try {
       const { id } = req.params;
 
       const colecao = await CollectionModel.findById(id);
 
       if (!colecao) {
-        return res.status(404).json({ error: "Coleção não encontrada" });
+        return res.status(404).json({ error: "Coleção não encontrada!" });
       }
 
       res.json(colecao);
     } catch (error) {
       console.error("Erro ao buscar coleção:", error);
-      res.status(500).json({ error: "Erro ao buscar coleção" });
+      res.status(500).json({ error: "Erro ao buscar coleção!" });
     }
   }
 
-  // POST /api/colecoes
+  // POST /colecoes
   async createCollection(req, res) {
     try {
       // Validação básica
-      const {
-        name,
-        description,
-        releaseYear
-      } = req.body;
+      const { name, description, releaseYear } = req.body;
 
-      // Verifica se todos os campos do coleção foram fornecidos
-      if (
-        !name ||
-        !description ||
-        !releaseYear 
-      ) {
-        return res
-          .status(400)
-          .json({ error: "Todos os campos são obrigatórios" });
+      // Verifica se todos os campos da coleção foram fornecidos
+      if (!name || !releaseYear) {
+        return res.status(400).json({
+          error: "Os campos nome e ano de lançamento são obrigatórios",
+        });
       }
 
-      // Criar o novo coleção
+      // Criar a nova coleção
       const newCollection = await CollectionModel.create(
         name,
         description,
@@ -64,7 +56,7 @@ class CollectionController {
 
       res.status(201).json({
         message: "Coleção criada com sucesso",
-        newCollection
+        newCollection,
       });
     } catch (error) {
       console.error("Erro ao criar coleção:", error);
@@ -72,17 +64,13 @@ class CollectionController {
     }
   }
 
-  // PUT /api/colecoes/:id
-  async updatedCollection(req, res) {
+  // PUT /colecoes/:id
+  async updateCollection(req, res) {
     try {
       const { id } = req.params;
-      const {
-        name,
-        description,
-        releaseYear
-      } = req.body;
+      const { name, description, releaseYear } = req.body;
 
-      // Atualizar o coleção
+      // Atualizar a coleção
       const updatedCollection = await CollectionModel.update(
         id,
         name,
@@ -91,13 +79,13 @@ class CollectionController {
       );
 
       if (!updatedCollection) {
-        return res.status(404).json({ error: "colecao não encontrada" });
+        return res.status(404).json({ error: "Coleção não encontrada" });
       }
 
       res.json(updatedCollection);
     } catch (error) {
       console.error("Erro ao atualizar coleção:", error);
-      res.status(500).json({ error: "Erro ao atualizar coleção" });
+      res.status(500).json({ error: "Erro ao atualizar coleção!" });
     }
   }
 
@@ -106,17 +94,19 @@ class CollectionController {
     try {
       const { id } = req.params;
 
-      // Remover o coleção
+      // Remover a coleção
       const result = await CollectionModel.delete(id);
 
       if (!result) {
-        return res.status(404).json({ error: "colecao não encontrada" });
+        return res.status(404).json({ error: "Coleção não encontrada!" });
       }
 
-      res.status(204).end(); // Resposta sem conteúdo
+      res.status(200).json({
+        message: "Coleção removida com sucesso",
+      });
     } catch (error) {
       console.error("Erro ao remover coleção:", error);
-      res.status(500).json({ error: "Erro ao remover coleção" });
+      res.status(500).json({ error: "Erro ao remover coleção!" });
     }
   }
 }

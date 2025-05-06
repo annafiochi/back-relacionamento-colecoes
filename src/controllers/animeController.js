@@ -125,7 +125,7 @@ class AnimeController {
   }
 
   // DELETE /api/animes/:id
-  async deleteCo(req, res) {
+  async deleteAnime(req, res) {
     try {
       const { id } = req.params;
 

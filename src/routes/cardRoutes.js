@@ -3,20 +3,20 @@ import CardController from "../controllers/cardController.js";
 
 const cardRouter = express.Router();
 
-// Rotas de card
-// GET /card - Listar todos os card
+// Rotas de Cartas
+// GET /cartas - Listar todas as Cartas
 cardRouter.get("/", CardController.getAllCards);
 
-// GET /card/:id - Obter um card pelo ID
+// GET /cartas/:id - Obter uma Carta pelo ID
 cardRouter.get("/:id", CardController.getCardById);
 
-// POST /card - Criar um novo card
+// POST /cartas - Criar uma nova Carta
 cardRouter.post("/", CardController.createCard);
 
-// PUT /card/:id - Atualizar um card
-cardRouter.put("/:id", CardController.updatedCard);
+// PUT /cartas/:id - Atualizar uma Carta
+cardRouter.put("/:id", CardController.updateCard);
 
-// DELETE /card/:id - Remover um card
+// DELETE /cartas/:id - Remover uma Carta
 cardRouter.delete("/:id", CardController.deleteCard);
 
 export default cardRouter;

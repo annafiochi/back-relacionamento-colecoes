@@ -1,22 +1,22 @@
-// import express from "express";
-// import CollectionController from "../controllers/collectionController";
+import express from "express";
+import AnimeController from "../controllers/animeController.js";
 
-// // const CollectionRouter = express.Router();
+const animesRouter = express.Router();
 
-// // Rotas de colecao
-// // GET /api/ccolecoes- Listar todos as colecoes
-// // CollectionRouter.get("/", CollectionController.getAllCollection);
+// Rotas de Animes
+// GET /api/animes - Listar todos os animes
+animesRouter.get("/", AnimeController.getAllAnimes);
 
-// // // GET /api/Collection/:id - Obter um colecao pelo ID
-// // CollectionRouter.get("/:id", CollectionController.getCollectionById);
+// GET /api/animes/:id - Obter um anime pelo ID
+animesRouter.get("/:id", AnimeController.getAnimeById);
 
-// // // POST /api/Collection - Criar um novo colecao
-// // CollectionRouter.post("/", CollectionController.createCollection);
+// POST /api/animes - Criar um novo anime
+animesRouter.post("/", AnimeController.createAnime);
 
-// // // PUT /api/Collection/:id - Atualizar uma colecao
-// // CollectionRouter.put("/:id", CollectionController.updateCollection);
+// PUT /api/animes/:id - Atualizar um anime
+animesRouter.put("/:id", AnimeController.updateAnime);
 
-// // // DELETE /api/Collection/:id - Remover uma colecao
-// // CollectionRouter.delete("/:id", CollectionController.deleteCollection);
+// DELETE /api/animes/:id - Remover um anime
+animesRouter.delete("/:id", AnimeController.deleteAnime);
 
-// // export default CollectionRouter;
+export default animesRouter;
